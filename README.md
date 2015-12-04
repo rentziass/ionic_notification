@@ -1,5 +1,7 @@
 # IonicNotification
 
+> _Work in progress, gem is not yet on RubyGems, it will be there as soon as it is production ready. Should be a matter of days and be online 8 Dec._
+
 IonicNotification is a Ruby gem that provides an interface to use [Ionic.io](http://ionic.io/)'s [Push Notification](http://docs.ionic.io/docs/push-overview) service.
 
 _Keep in mind that Ionic.io's Push Notification is still in alpha at the moment, so this gem will probably undergo some major updates in the near future._
