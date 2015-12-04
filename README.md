@@ -59,7 +59,7 @@ device_tokens = [
 # The constructor can take a hash of parameters including:
 #   device_tokens - An array of device tokens to push to
 #   message - a hash the represents the message to send  
-service = IonicPush::PushService.new(device_tokens: device_tokens)
+service = IonicNotification::PushService.new(device_tokens: device_tokens)
 
 # Call the notify! method to send the push notification
 # The following sends sends a message that looks like this:
@@ -107,4 +107,4 @@ end
 ## License
 
 This project uses MIT-LICENSE.
-This project started from the codebase of nwwatson `ionic_push_repo`
+This project started from the codebase of [nwwatson _ionic_push_repo_](https://github.com/nwwatson/ionic_push)
