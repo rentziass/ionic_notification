@@ -10,6 +10,10 @@ module IonicNotification
   mattr_accessor :ionic_api_key
   @@ionic_api_key = ""
 
+  # Private key for sending information
+  mattr_accessor :ionic_app_name
+  @@ionic_app_name = ""
+
   # API URL
   mattr_accessor :ionic_api_url
   @@ionic_api_url = "https://push.ionic.io"
