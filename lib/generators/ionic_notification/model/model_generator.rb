@@ -6,6 +6,7 @@ module IonicNotification
   module Generators
     class ModelGenerator < ActiveRecord::Generators::Base
 
+      include IonicNotification::Generators::OrmHelpers
       source_root File.expand_path('../templates', __FILE__)
 
       desc "Generates a migration for the given MODEL, adding :device_tokens column"

@@ -6,9 +6,12 @@ module IonicNotification
   # Include IonicNotification behaviour
   include IonicNotification::Concerns::IonicNotificable
 
+
 CONTENT
         buffer
       end
+
+      private
 
       def model_exists?
         File.exists?(File.join(destination_root, model_path))
