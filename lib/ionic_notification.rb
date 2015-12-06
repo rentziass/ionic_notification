@@ -19,4 +19,4 @@ module IonicNotification
   end
 end
 
-require 'ionic_push/push_service'
+require 'ionic_notification/push_service'
