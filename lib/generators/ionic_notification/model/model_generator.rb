@@ -4,7 +4,7 @@ require 'generators/ionic_notification/orm_helpers'
 
 module IonicNotification
   module Generators
-    class ModelGenerator < Rails::Generators::Base
+    class ModelGenerator < ActiveRecord::Generators::Base
 
       source_root File.expand_path('../templates', __FILE__)
 
