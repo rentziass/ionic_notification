@@ -10,6 +10,11 @@ IonicNotification.setup do |config|
   # https://apps.ionic.io/apps
   config.ionic_api_key = ENV["IONIC_API_KEY"]
 
+  # Your Ionic app name will be used for the notification
+  # title if none is provided. If you leave this undefined
+  # IonicNotification will use your Rails app name
+  config.ionic_app_name = "YourAppName"
+
   # ==> Configuration for the location of the API
   # Refer to the Ionic documentation for the correct location
   # Current documentation can be found here:
