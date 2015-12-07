@@ -7,7 +7,7 @@ module IonicNotification
         serialize :device_tokens, Array
 
         def notify(options = {})
-          notification = IonicNotification::Notification.new(options.merge!(devise_tokens))
+          notification = IonicNotification::Notification.new(options.merge!(device_tokens))
           notification.send
         end
       end
