@@ -24,7 +24,7 @@ module IonicNotification
       @android_payload ||= default_payload
       @ios_payload ||= default_payload
 
-      @production ||= options[:production] || init_production
+      @production = options[:production] || init_production
     end
 
     def send
@@ -71,7 +71,7 @@ module IonicNotification
     end
 
     def init_production
-      IonicNotification.ionic_app_in_production
+      IonicNotification.ionic_app_in_production || false
     end
 
     def assign_payload(payload)
