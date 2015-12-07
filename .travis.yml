@@ -8,6 +8,5 @@ before_install:
   - git config --global user.email 'travis-ci@example.com'
 install: 
   - bundle install
-  - rake db:setup
 notifications:
   email: false

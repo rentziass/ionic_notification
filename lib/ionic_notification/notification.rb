@@ -3,13 +3,11 @@ module IonicNotification
     include HTTParty
     base_uri IonicNotification.ionic_api_url
 
-    attr_accessor :tokens, :message, :android_payload
+    attr_accessor :tokens, :title, :message, :android_payload,
+      :ios_payload, :production
 
-    def initialize(**args)
-      #args.each &method(:instance_variable_set)
-      args.each do |attr, value|
-        instance_variable_set("@#{attr}", value)
-      end
+    def initialize(options = {})
+      @title ||= options[:title] || default_title
     end
 
     def notify!
@@ -35,6 +33,10 @@ module IonicNotification
     end
 
     private
+
+    def default_title
+      IonicNotification.ionic_app_name
+    end
 
     def auth
       { username: IonicNotification.ionic_api_key }
