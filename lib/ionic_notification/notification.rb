@@ -1,13 +1,12 @@
 module IonicNotification
   class Notification
-    include HTTParty
-    base_uri IonicNotification.ionic_api_url
-
     attr_accessor :tokens, :title, :message, :android_payload,
       :ios_payload, :production
 
     def initialize(options = {})
+      @tokens = init_tokens(options[:tokens])
       @title ||= options[:title] || default_title
+      @message ||= options[:message] || default_message
     end
 
     def notify!
@@ -34,16 +33,23 @@ module IonicNotification
 
     private
 
+    def init_tokens(tokens)
+      case tokens
+      when Array
+        tokens
+      when String
+        [tokens]
+      else
+        raise IonicNotification::WrongTokenType.new(tokens.class)
+      end
+    end
+
     def default_title
       IonicNotification.ionic_app_name
     end
 
-    def auth
-      { username: IonicNotification.ionic_api_key }
-    end
-
-    def headers
-      { 'Content-Type' => 'application/json', 'X-Ionic-Application-Id' => IonicNotification.ionic_application_id }
+    def default_message
+      "Empty notification."
     end
 
     def body
