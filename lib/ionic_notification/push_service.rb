@@ -15,7 +15,6 @@ module IonicNotification
 
     def payload
       options = {}
-      puts @body
       options.merge!(body: @body).
         merge!(basic_auth: auth).
         merge!(headers: headers)

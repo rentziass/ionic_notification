@@ -79,12 +79,5 @@ module IonicNotification
       return { payload: payload } if payload.is_a? Hash
       raise IonicNotification::WrongPayloadType.new(payload.class)
     end
-
-    def body
-      {
-        tokens: @device_tokens,
-        notification: @message
-      }.to_json
-    end
   end
 end
