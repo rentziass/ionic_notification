@@ -46,13 +46,13 @@ describe IonicNotification::Notification do
 
     it "has android_payload defaulting to Hash" do
       notification = create_default_notification
-      empty_payload = { payload: {} }
+      empty_payload = {payload: {}}
       expect(notification.android_payload).to eq empty_payload
     end
 
     it "has ios_payload defaulting to Hash" do
       notification = create_default_notification
-      empty_payload = { payload: {}  }
+      empty_payload = {payload: {}}
       expect(notification.ios_payload).to eq empty_payload
     end
   end
