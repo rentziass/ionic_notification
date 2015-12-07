@@ -7,31 +7,9 @@ module IonicNotification
       @tokens = init_tokens(options[:tokens])
       @title ||= options[:title] || default_title
       @message ||= options[:message] || default_message
-      @android_payload ||= options[:android_payload] || {}
-      @ios_payload ||= options[:ios_payload] || {}
+      @android_payload ||= options[:android_payload] || default_payload
+      @ios_payload ||= options[:ios_payload] || default_payload
       @production ||= options[:production] || init_production
-    end
-
-    def notify!
-      self.class.post("/api/v1/push", payload)
-    end
-
-    def alert!(msg)
-      notify do
-        {
-          alert: msg
-        }
-      end
-    end
-
-    def notify(&block)
-      @message =  yield(block)
-      notify!
-    end
-
-    def payload
-      options = {}
-      options.merge!(body: body).merge!({ basic_auth: auth}).merge!({ headers: headers})
     end
 
     private
@@ -53,6 +31,10 @@ module IonicNotification
 
     def default_message
       "Empty notification."
+    end
+
+    def default_payload
+      { payload: {} }
     end
 
     def init_production
