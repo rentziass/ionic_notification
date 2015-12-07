@@ -34,7 +34,7 @@ module IonicNotification
     end
 
     def default_payload
-      {payload: {}}
+      { payload: {} }
     end
 
     def init_production
