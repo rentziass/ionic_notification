@@ -15,7 +15,9 @@ module IonicNotification
 
     def payload
       options = {}
-      options.merge!(body: @body).merge!({ basic_auth: auth}).merge!({ headers: headers})
+      options.merge!(body: @body).
+        merge!(basic_auth: auth).
+        merge!(headers: headers)
     end
 
     private
