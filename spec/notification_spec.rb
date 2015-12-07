@@ -93,7 +93,7 @@ describe IonicNotification::Notification do
 
   def create_default_notification(options = {})
     IonicNotification::Notification.new(
-      { tokens: %w(asdf, fdsa)}.merge! options
+      { tokens: %w(asdf, fdsa) }.merge! options
     )
   end
 
