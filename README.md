@@ -15,16 +15,16 @@ gem install ionic_push_notification
 You can add IonicNotification to your Gemfile with:
 
 ```
-gem 'ionic_push_notification'
+gem 'ionic_notification'
 ```
 
 After you installed IonicNotification, you need to run the generator:
 
 ```
-bundle exec rails g ionic_push_notification:install
+rails g ionic_notification:install
 ```
 
-Configure the ionic_push_notification.rb file within config/initializers. You can use the default set environment variables, change them or hardcode those values (altough is highly NOT recommended)
+Configure the ionic_notification.rb file within config/initializers. You can use the default set environment variables, change them or hardcode those values (altough is highly NOT recommended)
 
 ```Ruby
   IonicNotification.setup do |config|
@@ -39,6 +39,11 @@ Configure the ionic_push_notification.rb file within config/initializers. You ca
     # https://apps.ionic.io/apps
     config.ionic_api_key = ENV["IONIC_API_KEY"]
 
+    # Your Ionic app name will be used for the notification
+    # title if none is provided. If you leave this undefined
+    # IonicNotification will use your Rails app name
+    config.ionic_app_name = "YourAppName"
+
     # ==> Configuration for the location of the API
     # Refer to the Ionic documentation for the correct location
     # Current documentation can be found here:
@@ -46,6 +51,35 @@ Configure the ionic_push_notification.rb file within config/initializers. You ca
     # defaults to https://push.ionic.io
     # config.ionic_api_url = ENV["IONIC_API_URL"]
   end
+```
+
+## Use from within your Model
+If you want to use IonicNotification from within your ActiveRecord model you can run the proper generator:
+```
+rails g ionic_notification:model YOUR_MODEL
+```
+This creates a migration that will add a `:device_tokens` column to your model
+```Ruby
+class AddDeviceTokensTo_YOUR_MODEL < ActiveRecord::Migration
+  def self.up
+    add_column :your_model_table_name, :device_tokens, :text
+  end
+
+  def down
+    remove_column :your_model_table_name, :device_tokens
+  end
+end
+```
+
+and includes IonicNotification in your model file
+```Ruby
+# app/models/your_model.rb
+class YourModel < ActiveRecord::Base
+  # Include IonicNotification behaviour
+  include IonicNotification::Concerns::IonicNotificable
+
+  # Your stuff...
+end
 ```
 
 ## Sending a Push Notification
