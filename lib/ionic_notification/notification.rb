@@ -28,8 +28,8 @@ module IonicNotification
     end
 
     def send
-      PushService
-      puts "opplà"
+      service = PushService.new body
+      service.notify!
     end
 
     private
