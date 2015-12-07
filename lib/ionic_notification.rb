@@ -16,7 +16,7 @@ module IonicNotification
 
   # Is application in production
   mattr_accessor :ionic_app_in_production
-  @@ionic_app_in_production = true
+  @@ionic_app_in_production = nil
 
   # API URL
   mattr_accessor :ionic_api_url
