@@ -43,6 +43,11 @@ describe IonicNotification::Notification do
       expect(notification.message).not_to be_nil
       expect(notification.message).to be_a_kind_of String
     end
+
+    it "has android_payload defaulting to Hash" do
+      notification = create_default_notification
+      expect(notification.android_payload).to eq {}
+    end
   end
 
   def create_default_notification

@@ -10,9 +10,13 @@ module IonicNotification
   mattr_accessor :ionic_api_key
   @@ionic_api_key = ""
 
-  # Private key for sending information
+  # Application name
   mattr_accessor :ionic_app_name
   @@ionic_app_name = ""
+
+  # Is application in production
+  mattr_accessor :ionic_app_in_production
+  @@ionic_app_in_production = true
 
   # API URL
   mattr_accessor :ionic_api_url
