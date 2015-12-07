@@ -6,8 +6,9 @@ module IonicNotification
       included do
         serialize :device_tokens, Array
 
-        def notify
-          puts "Fire notification"
+        def notify(options = {})
+          notification = IonicNotification::Notification.new(options.merge!(tokens: device_tokens))
+          notification.send
         end
       end
     end
