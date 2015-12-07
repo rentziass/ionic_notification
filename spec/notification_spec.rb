@@ -70,23 +70,31 @@ describe IonicNotification::Notification do
       android_payload = { os: "android" }
 
       # IOS
-      notification = create_default_notification payload: payload, ios_payload: ios_payload
+      notification = create_default_notification(
+        create_default_notification payload: "I'm no hash"
+      )
       expected_payload = { payload: ios_payload }
       expect(notification.ios_payload).to eq expected_payload
 
       # Android
-      notification = create_default_notification payload: payload, android_payload: android_payload
+      notification = create_default_notification(
+        payload: payload, android_payload: android_payload
+      )
       expected_payload = { payload: android_payload }
       expect(notification.android_payload).to eq expected_payload
     end
 
     it "raises an error if a non hash is given as payload" do
-      expect{ create_default_notification payload: "I'm no hash" }.to raise_error IonicNotification::WrongPayloadType
+      expect {
+        create_default_notification payload: "I'm no hash"
+      }.to raise_error IonicNotification::WrongPayloadType
     end
   end
 
   def create_default_notification(options = {})
-    IonicNotification::Notification.new({ tokens: ["asdf", "fdsa"]}.merge! options)
+    IonicNotification::Notification.new(
+      { tokens: %w(asdf, fdsa)}.merge! options
+    )
   end
 
   def create_notification(options = {})

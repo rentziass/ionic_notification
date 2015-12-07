@@ -1,6 +1,6 @@
 module IonicNotification
   class WrongTokenType < StandardError
-    def initialize(klazz= nil)
+    def initialize(klazz = nil)
       return complete_message(klazz) if klazz
       default_message
     end
@@ -17,7 +17,7 @@ module IonicNotification
   end
 
   class WrongPayloadType < StandardError
-    def initialize(klazz= nil)
+    def initialize(klazz = nil)
       return complete_message(klazz) if klazz
       default_message
     end

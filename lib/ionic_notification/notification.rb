@@ -76,7 +76,7 @@ module IonicNotification
 
     def assign_payload(payload)
       return default_payload unless payload
-      return { payload: payload } if payload.kind_of? Hash
+      return { payload: payload } if payload.is_a? Hash
       raise IonicNotification::WrongPayloadType.new(payload.class)
     end
 
