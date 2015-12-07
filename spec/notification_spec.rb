@@ -43,10 +43,58 @@ describe IonicNotification::Notification do
       expect(notification.message).not_to be_nil
       expect(notification.message).to be_a_kind_of String
     end
+
+    it "has android_payload defaulting to Hash" do
+      notification = create_default_notification
+      empty_payload = { payload: {} }
+      expect(notification.android_payload).to eq empty_payload
+    end
+
+    it "has ios_payload defaulting to Hash" do
+      notification = create_default_notification
+      empty_payload = { payload: {}  }
+      expect(notification.ios_payload).to eq empty_payload
+    end
+
+    it "assigns both payloads if a common one is given" do
+      payload = { first: "pair" }
+      notification = create_default_notification payload: payload
+      expected_payload = { payload: payload }
+      expect(notification.android_payload).to eq expected_payload
+      expect(notification.ios_payload).to eq expected_payload
+    end
+
+    it "common payload is overwritten by a specfic one" do
+      payload = { first: "pair" }
+      ios_payload = { os: "ios" }
+      android_payload = { os: "android" }
+
+      # IOS
+      notification = create_default_notification(
+        create_default_notification payload: "I'm no hash"
+      )
+      expected_payload = { payload: ios_payload }
+      expect(notification.ios_payload).to eq expected_payload
+
+      # Android
+      notification = create_default_notification(
+        payload: payload, android_payload: android_payload
+      )
+      expected_payload = { payload: android_payload }
+      expect(notification.android_payload).to eq expected_payload
+    end
+
+    it "raises an error if a non hash is given as payload" do
+      expect {
+        create_default_notification payload: "I'm no hash"
+      }.to raise_error IonicNotification::WrongPayloadType
+    end
   end
 
-  def create_default_notification
-    IonicNotification::Notification.new(tokens: ["asdf", "fdsa"])
+  def create_default_notification(options = {})
+    IonicNotification::Notification.new(
+      { tokens: %w(asdf, fdsa) }.merge! options
+    )
   end
 
   def create_notification(options = {})

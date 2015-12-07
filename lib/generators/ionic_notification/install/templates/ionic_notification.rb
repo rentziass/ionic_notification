@@ -15,6 +15,18 @@ IonicNotification.setup do |config|
   # IonicNotification will use your Rails app name
   config.ionic_app_name = "YourAppName"
 
+  # If production is set to true, notifications will be sent
+  # to all devices which have your app running with production
+  # certificates (generally coming from store). Otherwise,
+  # if set to false, to all devices which have your app running
+  # with developer certificates.
+  config.ionic_app_in_production = true
+  # If you want a more flexible solution, you can
+  # uncomment this, so that notifications will be sent
+  # to "production devices" only while Rails app is running
+  # in production environment
+  # config.ionic_app_in_production = Rails.env.production?
+
   # ==> Configuration for the location of the API
   # Refer to the Ionic documentation for the correct location
   # Current documentation can be found here:

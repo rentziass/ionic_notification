@@ -7,31 +7,45 @@ module IonicNotification
       @tokens = init_tokens(options[:tokens])
       @title ||= options[:title] || default_title
       @message ||= options[:message] || default_message
-    end
 
-    def notify!
-      self.class.post("/api/v1/push", payload)
-    end
-
-    def alert!(msg)
-      notify do
-        {
-          alert: msg
-        }
+      if options[:android_payload]
+        @android_payload ||= assign_payload(options[:android_payload])
       end
+
+      if options[:ios_payload]
+        @ios_payload ||= assign_payload(options[:ios_payload])
+      end
+
+      if options[:payload]
+        @android_payload ||= assign_payload(options[:payload])
+        @ios_payload ||= assign_payload(options[:payload])
+      end
+
+      @android_payload ||= default_payload
+      @ios_payload ||= default_payload
+
+      @production ||= options[:production] || init_production
     end
 
-    def notify(&block)
-      @message =  yield(block)
-      notify!
-    end
-
-    def payload
-      options = {}
-      options.merge!(body: body).merge!({ basic_auth: auth}).merge!({ headers: headers})
+    def send
+      PushService
+      puts "opplà"
     end
 
     private
+
+    def body
+      {
+        tokens: @tokens,
+        production: @production,
+        notification: {
+          title: @title,
+          alert: @message,
+          android: @android_payload,
+          ios: @ios_payload
+        }
+      }.to_json
+    end
 
     def init_tokens(tokens)
       case tokens
@@ -50,6 +64,20 @@ module IonicNotification
 
     def default_message
       "Empty notification."
+    end
+
+    def default_payload
+      { payload: {} }
+    end
+
+    def init_production
+      IonicNotification.ionic_app_in_production
+    end
+
+    def assign_payload(payload)
+      return default_payload unless payload
+      return { payload: payload } if payload.is_a? Hash
+      raise IonicNotification::WrongPayloadType.new(payload.class)
     end
 
     def body
