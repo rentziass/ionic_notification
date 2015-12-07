@@ -28,8 +28,8 @@ module IonicNotification
     end
 
     def send
-      PushService
-      puts "opplà"
+      service = PushService.new body
+      service.notify!
     end
 
     private
@@ -78,13 +78,6 @@ module IonicNotification
       return default_payload unless payload
       return { payload: payload } if payload.is_a? Hash
       raise IonicNotification::WrongPayloadType.new(payload.class)
-    end
-
-    def body
-      {
-        tokens: @device_tokens,
-        notification: @message
-      }.to_json
     end
   end
 end
