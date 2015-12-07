@@ -24,4 +24,5 @@ module IonicNotification
 end
 
 require 'ionic_notification/push_service'
+require 'ionic_notification/notification'
 require 'ionic_notification/concerns/ionic_notificable'
