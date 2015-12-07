@@ -7,12 +7,45 @@ module IonicNotification
       @tokens = init_tokens(options[:tokens])
       @title ||= options[:title] || default_title
       @message ||= options[:message] || default_message
-      @android_payload ||= options[:android_payload] || default_payload
-      @ios_payload ||= options[:ios_payload] || default_payload
+
+      if options[:android_payload]
+        @android_payload ||= assign_payload(options[:android_payload])
+      end
+
+      if options[:ios_payload]
+        @ios_payload ||= assign_payload(options[:ios_payload])
+      end
+
+      if options[:payload]
+        @android_payload ||= assign_payload(options[:payload])
+        @ios_payload ||= assign_payload(options[:payload])
+      end
+
+      @android_payload ||= default_payload
+      @ios_payload ||= default_payload
+
       @production ||= options[:production] || init_production
     end
 
+    def send
+      PushService
+      puts "opplà"
+    end
+
     private
+
+    def body
+      {
+        tokens: @tokens,
+        production: @production,
+        notification: {
+          title: @title,
+          alert: @message,
+          android: @android_payload,
+          ios: @ios_payload
+        }
+      }.to_json
+    end
 
     def init_tokens(tokens)
       case tokens
@@ -39,6 +72,12 @@ module IonicNotification
 
     def init_production
       IonicNotification.ionic_app_in_production
+    end
+
+    def assign_payload(payload)
+      return default_payload unless payload
+      return { payload: payload } if payload.kind_of? Hash
+      raise IonicNotification::WrongPayloadType.new(payload.class)
     end
 
     def body
