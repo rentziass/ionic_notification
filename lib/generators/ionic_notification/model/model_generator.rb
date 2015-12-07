@@ -12,12 +12,12 @@ module IonicNotification
       desc "Generates a migration for the given MODEL, adding :device_tokens column"
 
       def copy_migration
-        migration_template "migration.rb", "db/migrate/add_ionic_notification_to_#{table_name}.rb"
+        migration_template "migration.rb", "db/migrate/add_device_tokens_to_#{table_name}.rb"
       end
 
       def inject_ionic_notification_content
         content = model_contents
-        
+
         class_path = if namespaced?
           class_name.to_s.split("::")
         else
