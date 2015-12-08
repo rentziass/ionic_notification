@@ -4,7 +4,7 @@ module IonicNotification
       :ios_payload, :production, :scheduled
 
     def initialize(options = {})
-      @message_provided = options[:title]
+      @message_provided = options[:message]
 
       @tokens = init_tokens(options[:tokens])
       @title ||= options[:title] || default_title

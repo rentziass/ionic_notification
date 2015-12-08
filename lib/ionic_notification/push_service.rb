@@ -40,6 +40,7 @@ module IonicNotification
     def body
       {
         tokens: @notification.tokens,
+        scheduled: @notification.scheduled,
         production: @notification.production,
         notification: {
           title: @notification.title,
