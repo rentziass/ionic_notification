@@ -34,19 +34,6 @@ module IonicNotification
 
     private
 
-    def body
-      {
-        tokens: @tokens,
-        production: @production,
-        notification: {
-          title: @title,
-          alert: @message,
-          android: @android_payload,
-          ios: @ios_payload
-        }
-      }.to_json
-    end
-
     def init_tokens(tokens)
       case tokens
       when Array
