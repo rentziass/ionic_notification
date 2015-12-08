@@ -1,9 +1,11 @@
 module IonicNotification
   class Notification
     attr_accessor :tokens, :title, :message, :android_payload,
-      :ios_payload, :production
+      :ios_payload, :production, :scheduled
 
     def initialize(options = {})
+      @message_provided = options[:message]
+
       @tokens = init_tokens(options[:tokens])
       @title ||= options[:title] || default_title
       @message ||= options[:message] || default_message
@@ -24,27 +26,24 @@ module IonicNotification
       @android_payload ||= default_payload
       @ios_payload ||= default_payload
 
+      @scheduled = options[:scheduled]
+
       @production = options[:production] || init_production
     end
 
     def send
-      service = PushService.new body
-      service.notify!
+      if @message_provided || IonicNotification.process_empty_messages
+        service = PushService.new self
+        service.notify!
+      else
+        self.class.new_logger.empty_message
+      end
     end
 
     private
 
-    def body
-      {
-        tokens: @tokens,
-        production: @production,
-        notification: {
-          title: @title,
-          alert: @message,
-          android: @android_payload,
-          ios: @ios_payload
-        }
-      }.to_json
+    def self.new_logger
+      IonicNotification::Logger.new
     end
 
     def init_tokens(tokens)
@@ -63,7 +62,7 @@ module IonicNotification
     end
 
     def default_message
-      "Empty notification."
+      IonicNotification.default_message
     end
 
     def default_payload

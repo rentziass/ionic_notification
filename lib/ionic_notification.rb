@@ -18,9 +18,25 @@ module IonicNotification
   mattr_accessor :ionic_app_in_production
   @@ionic_app_in_production = true
 
+  # Send notification even if it has no message
+  mattr_accessor :process_empty_messages
+  @@process_empty_messages = false
+
+  # Default message for notifications
+  mattr_accessor :default_message
+  @@default_message = "This was intended to be a beautiful notification. Unfortunately, you're not qualified to read it."
+
   # Logging level
   mattr_accessor :log_level
   @@log_level = :debug
+
+  # Array that stores latest X sent notifications
+  mattr_accessor :latest_notifications
+  @@latest_notifications = []
+
+  # Array that stores latest X sent notifications
+  mattr_accessor :notification_store_limit
+  @@notification_store_limit = 3
 
   # API URL
   mattr_accessor :ionic_api_url
@@ -29,10 +45,19 @@ module IonicNotification
   def self.setup
     yield self
   end
+
+  def self.store(notification)
+    if latest_notifications.count >= notification_store_limit
+      latest_notifications.shift
+    end
+    latest_notifications << notification
+  end
 end
 
 require "ionic_notification/logger"
 require "ionic_notification/push_service"
+require "ionic_notification/status_service"
 require "ionic_notification/notification"
+require "ionic_notification/sent_notification"
 require "ionic_notification/exceptions"
 require "ionic_notification/concerns/ionic_notificable"
