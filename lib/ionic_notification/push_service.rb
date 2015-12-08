@@ -24,7 +24,7 @@ module IonicNotification
     private
 
     def sent_notification(resp)
-      SentNotification.new(
+      IonicNotification::SentNotification.new(
         tokens: @notification.tokens,
         production: @notification.production,
         title: @notification.title,
