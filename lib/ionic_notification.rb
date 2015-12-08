@@ -12,11 +12,15 @@ module IonicNotification
 
   # Application name
   mattr_accessor :ionic_app_name
-  @@ionic_app_name = ""
+  @@ionic_app_name = Rails.application.class.parent_name
 
   # Is application in production
   mattr_accessor :ionic_app_in_production
-  @@ionic_app_in_production = nil
+  @@ionic_app_in_production = true
+
+  # Logging level
+  mattr_accessor :log_level
+  @@log_level = :debug
 
   # API URL
   mattr_accessor :ionic_api_url
@@ -27,7 +31,8 @@ module IonicNotification
   end
 end
 
-require 'ionic_notification/push_service'
-require 'ionic_notification/notification'
-require 'ionic_notification/exceptions'
-require 'ionic_notification/concerns/ionic_notificable'
+require "ionic_notification/logger"
+require "ionic_notification/push_service"
+require "ionic_notification/notification"
+require "ionic_notification/exceptions"
+require "ionic_notification/concerns/ionic_notificable"

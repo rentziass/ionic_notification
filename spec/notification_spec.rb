@@ -71,7 +71,7 @@ describe IonicNotification::Notification do
 
       # IOS
       notification = create_default_notification(
-        create_default_notification payload: "I'm no hash"
+        payload: ios_payload
       )
       expected_payload = { payload: ios_payload }
       expect(notification.ios_payload).to eq expected_payload
