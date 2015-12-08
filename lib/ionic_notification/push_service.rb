@@ -5,22 +5,49 @@ module IonicNotification
 
     attr_accessor :body
 
-    def initialize(body)
-      @body = body
+    def initialize(notification)
+      @notification = notification
     end
 
     def notify!
-      self.class.post("/api/v1/push", payload)
+      resp = self.class.post("/api/v1/push", payload)
+      IonicNotification.store(sent_notification(resp))
     end
 
     def payload
       options = {}
-      options.merge!(body: @body).
+      options.merge!(body: body).
         merge!(basic_auth: auth).
         merge!(headers: headers)
     end
 
     private
+
+    def sent_notification(resp)
+      SentNotification.new(
+        tokens: @notification.tokens,
+        production: @notification.production,
+        title: @notification.title,
+        message: @notification.message,
+        android_payload: @notification.android_payload,
+        ios_payload: @notification.ios_payload,
+        result: resp["result"],
+        message_id: resp["message_id"]
+      )
+    end
+
+    def body
+      {
+        tokens: @notification.tokens,
+        production: @notification.production,
+        notification: {
+          title: @notification.title,
+          alert: @notification.message,
+          android: @notification.android_payload,
+          ios: @notification.ios_payload
+        }
+      }.to_json
+    end
 
     def auth
       { username: IonicNotification.ionic_api_key }

@@ -1,34 +1,21 @@
 module IonicNotification
-  class Notification
+  class SentNotification
     attr_accessor :tokens, :title, :message, :android_payload,
-      :ios_payload, :production
+      :ios_payload, :production, :result, :message_id
 
     def initialize(options = {})
-      @tokens = init_tokens(options[:tokens])
-      @title ||= options[:title] || default_title
-      @message ||= options[:message] || default_message
-
-      if options[:android_payload]
-        @android_payload ||= assign_payload(options[:android_payload])
-      end
-
-      if options[:ios_payload]
-        @ios_payload ||= assign_payload(options[:ios_payload])
-      end
-
-      if options[:payload]
-        @android_payload ||= assign_payload(options[:payload])
-        @ios_payload ||= assign_payload(options[:payload])
-      end
-
-      @android_payload ||= default_payload
-      @ios_payload ||= default_payload
-
-      @production = options[:production] || init_production
+      @tokens = options[:tokens]
+      @title = options[:title]
+      @message = options[:message]
+      @android_payload = options[:android_payload]
+      @ios_payload = options[:ios_payload]
+      @production = options[:production]
+      @result = options[:result]
+      @message_id = options[:message_id]
     end
 
-    def send
-      service = PushService.new self
+    def status
+      service = PushService.new body
       service.notify!
     end
 
