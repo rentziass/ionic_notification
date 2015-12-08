@@ -49,5 +49,6 @@ end
 require "ionic_notification/logger"
 require "ionic_notification/push_service"
 require "ionic_notification/notification"
+require "ionic_notification/sent_notification"
 require "ionic_notification/exceptions"
 require "ionic_notification/concerns/ionic_notificable"
