@@ -2,6 +2,7 @@ module IonicNotification
   module Concerns
     module IonicNotificable
       extend ActiveSupport::Concern
+      include IonicNotification::Logger
 
       included do
         serialize :device_tokens, Array
@@ -13,19 +14,6 @@ module IonicNotification
           notification.send
         end
 
-        private
-
-        def no_device_tokens_logger
-          logger.debug "#{logger_label} No device tokens were found for #{self}, skipping."
-        end
-
-        def missing_device_tokens_logger
-          logger.debug "#{logger_label} This model does not respond to :device_tokens, did you run your migrations?"
-        end
-
-        def logger_label
-          "IonicNotification:"
-        end
       end
     end
   end

@@ -15,6 +15,10 @@ IonicNotification.setup do |config|
   # IonicNotification will use your Rails app name
   config.ionic_app_name = "YourAppName"
 
+  # If you want, you can customize IonicNotification logging level
+  # It defaults to :debug
+  # config.log_level = :debug
+
   # If production is set to true, notifications will be sent
   # to all devices which have your app running with production
   # certificates (generally coming from store). Otherwise,
