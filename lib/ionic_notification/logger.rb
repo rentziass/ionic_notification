@@ -1,5 +1,5 @@
 module IonicNotification
-  module Logger
+  class Logger
     def no_device_tokens_logger(instance)
       return unless available?
       ionic_logger "#{logger_label} No device tokens were found for #{instance}, skipping."
