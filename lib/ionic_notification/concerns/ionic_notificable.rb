@@ -13,7 +13,6 @@ module IonicNotification
           notification = IonicNotification::Notification.new(options.merge!(tokens: device_tokens))
           notification.send
         end
-
       end
     end
   end
