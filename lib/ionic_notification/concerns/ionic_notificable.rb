@@ -2,7 +2,6 @@ module IonicNotification
   module Concerns
     module IonicNotificable
       extend ActiveSupport::Concern
-      include IonicNotification::Logger
 
       included do
         serialize :device_tokens, Array
