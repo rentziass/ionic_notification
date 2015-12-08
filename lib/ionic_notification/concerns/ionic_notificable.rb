@@ -9,8 +9,9 @@ module IonicNotification
         def notify(options = {})
           logger = self.class.new_logger
           return logger.missing_device_tokens unless respond_to?(:device_tokens)
-          return logger.no_device_tokens(self) unless device_tokens.count > 0
-          notification = IonicNotification::Notification.new(options.merge!(tokens: device_tokens))
+          tokens = device_tokens.uniq
+          return logger.no_device_tokens(self) unless tokens.count > 0
+          notification = IonicNotification::Notification.new(options.merge!(tokens: tokens))
           notification.send
         end
 

@@ -22,12 +22,27 @@ module IonicNotification
   mattr_accessor :log_level
   @@log_level = :debug
 
+  # Array that stores latest X sent notifications
+  mattr_accessor :latest_notifications
+  @@latest_notifications = []
+
+  # Array that stores latest X sent notifications
+  mattr_accessor :notification_store_limit
+  @@notification_store_limit = 10
+
   # API URL
   mattr_accessor :ionic_api_url
   @@ionic_api_url = "https://push.ionic.io"
 
   def self.setup
     yield self
+  end
+
+  def self.store(notification)
+    if latest_notifications.count >= notification_store_limit
+      latest_notifications.shift
+    end
+    latest_notifications << notification
   end
 end
 

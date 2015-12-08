@@ -18,6 +18,9 @@ IonicNotification.setup do |config|
   # If you want, you can customize IonicNotification logging level
   # It defaults to :debug
   # config.log_level = :debug
+  #
+  # You can change the amount of stored sent notifications
+  # config.notification_store_limit = 10
 
   # If production is set to true, notifications will be sent
   # to all devices which have your app running with production
