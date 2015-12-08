@@ -1,11 +1,11 @@
 module IonicNotification
   class Logger
-    def no_device_tokens_logger(instance)
+    def no_device_tokens(instance)
       return unless available?
       ionic_logger "#{logger_label} No device tokens were found for #{instance}, skipping."
     end
 
-    def missing_device_tokens_logger
+    def missing_device_tokens
       return unless available?
       ionic_logger "#{logger_label} This model does not respond to :device_tokens, did you run your migrations?"
     end
