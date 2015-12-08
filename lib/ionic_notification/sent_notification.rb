@@ -13,11 +13,18 @@ module IonicNotification
       @result = options[:result]
       @message_id = options[:message_id]
       @sent_at = Time.now
+      @scheduled = init_scheduled(options[:scheduled])
     end
 
     def status
       service = StatusService.new @message_id
       service.check_status!
+    end
+
+    private
+
+    def init_scheduled(timestamp)
+      return DateTime.strptime(timestamp.to_s,'%s') if timestamp
     end
   end
 end

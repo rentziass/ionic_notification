@@ -1,7 +1,7 @@
 module IonicNotification
   class Notification
     attr_accessor :tokens, :title, :message, :android_payload,
-      :ios_payload, :production
+      :ios_payload, :production, :scheduled
 
     def initialize(options = {})
       @message_provided = options[:title]
@@ -25,6 +25,8 @@ module IonicNotification
 
       @android_payload ||= default_payload
       @ios_payload ||= default_payload
+
+      @scheduled = options[:scheduled]
 
       @production = options[:production] || init_production
     end
