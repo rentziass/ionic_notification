@@ -17,7 +17,7 @@ module IonicNotification
     private
 
     def ionic_logger(message)
-      logger.send(IonicNotification.log_level, message)
+      Rails.logger.send(IonicNotification.log_level, message)
     end
 
     def available_log_levels
@@ -28,7 +28,7 @@ module IonicNotification
       if available_log_levels.include? IonicNotification.log_level
         true
       else
-        logger.fatal "#{logger_label} The specified log level is not available!"
+        Rails.logger.fatal "#{logger_label} The specified log level is not available!"
         false
       end
     end
