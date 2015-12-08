@@ -18,6 +18,7 @@ module IonicNotification
 
     def ionic_logger(message)
       Rails.logger.send(IonicNotification.log_level, message)
+      nil
     end
 
     def available_log_levels
