@@ -13,6 +13,14 @@ module IonicNotification
           notification = IonicNotification::Notification.new(options.merge!(tokens: device_tokens))
           notification.send
         end
+
+        def self.notify_all(options = {})
+          return missing_device_tokens_logger unless method_defined?(:device_tokens)
+          tokens = all.map(&:device_tokens).flatten.uniq
+          return no_device_tokens_logger(self) unless tokens.count > 0
+          notification = IonicNotification::Notification.new(options.merge!(tokens: tokens))
+          notification.send
+        end
       end
     end
   end
