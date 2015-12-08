@@ -60,7 +60,7 @@ module IonicNotification
     end
 
     def default_message
-      "Empty notification."
+      IonicNotification.default_message
     end
 
     def default_payload
