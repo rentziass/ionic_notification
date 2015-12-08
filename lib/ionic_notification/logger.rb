@@ -12,7 +12,7 @@ module IonicNotification
 
     def empty_message
       return unless available?
-      ionic_logger "#{logger_label} WARNING! You tried to send a notification with empty message, but you wisely choose not to allow this practice."
+      ionic_logger "#{logger_label} WARNING! You tried to send a notification with empty message, but you wisely chose not to allow this practice."
     end
 
     def logger_label
