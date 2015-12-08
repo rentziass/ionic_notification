@@ -31,6 +31,7 @@ module IonicNotification
         message: @notification.message,
         android_payload: @notification.android_payload,
         ios_payload: @notification.ios_payload,
+        scheduled: @notification.scheduled,
         result: resp["result"],
         message_id: resp["message_id"]
       )
