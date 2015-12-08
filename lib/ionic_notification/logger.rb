@@ -1,8 +1,8 @@
 module IonicNotification
   module Logger
-    def no_device_tokens_logger
+    def no_device_tokens_logger(instance)
       available?
-      ionic_logger "#{logger_label} No device tokens were found for #{self}, skipping."
+      ionic_logger "#{logger_label} No device tokens were found for #{instance}, skipping."
     end
 
     def missing_device_tokens_logger
@@ -16,8 +16,8 @@ module IonicNotification
 
     private
 
-    def ionic_logger
-      logger.send(IonicNotification.log_level)
+    def ionic_logger(message)
+      logger.send(IonicNotification.log_level, message)
     end
 
     def available_log_levels
