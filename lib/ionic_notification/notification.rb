@@ -4,6 +4,8 @@ module IonicNotification
       :ios_payload, :production
 
     def initialize(options = {})
+      @message_provided = options[:title]
+
       @tokens = init_tokens(options[:tokens])
       @title ||= options[:title] || default_title
       @message ||= options[:message] || default_message
@@ -28,11 +30,19 @@ module IonicNotification
     end
 
     def send
-      service = PushService.new self
-      service.notify!
+      if @message_provided || IonicNotification.process_empty_messages
+        service = PushService.new self
+        service.notify!
+      else
+        self.class.new_logger.empty_message
+      end
     end
 
     private
+
+    def self.new_logger
+      IonicNotification::Logger.new
+    end
 
     def init_tokens(tokens)
       case tokens

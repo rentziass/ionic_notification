@@ -10,6 +10,11 @@ module IonicNotification
       ionic_logger "#{logger_label} This model does not respond to :device_tokens, did you run your migrations?"
     end
 
+    def empty_message
+      return unless available?
+      ionic_logger "#{logger_label} WARNING! You tried to send a notification with empty message, but you wisely choose not to allow this practice."
+    end
+
     def logger_label
       "IonicNotification:"
     end

@@ -20,7 +20,22 @@ IonicNotification.setup do |config|
   # config.log_level = :debug
   #
   # You can change the amount of stored sent notifications
-  # config.notification_store_limit = 10
+  # config.notification_store_limit = 3
+  #
+  # By default, notifications with no message provided will be skipped,
+  # you don't want your clients to receive a notification with no message,
+  # right? Well, sometimes it can be useful to speed up development
+  # and test. You could like to be able to do something like:
+  #   User.first.notify
+  # and see what happens, without bothering writing a fake message.
+  # You can enable this if you want:
+  # config.process_empty_messages = true
+  # Or in a more safe way:
+  # config.process_empty_messages = !Rails.env.production?
+  #
+  # Anyway, you can set up a default message to be used when you don't
+  # provide one:
+  # config.default_message = "This was intended to be a beautiful notification. Unfortunately, you're not qualified to read it."
 
   # If production is set to true, notifications will be sent
   # to all devices which have your app running with production
