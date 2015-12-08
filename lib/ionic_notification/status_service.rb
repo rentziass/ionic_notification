@@ -10,7 +10,7 @@ module IonicNotification
     end
 
     def check_status!
-      self.class.post("/api/v1/status/#{@message_id}", payload)
+      self.class.get("/api/v1/status/#{@message_id}", payload)
     end
 
     def payload
