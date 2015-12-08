@@ -1,12 +1,12 @@
 module IonicNotification
   module Logger
     def no_device_tokens_logger(instance)
-      available?
+      return unless available?
       ionic_logger "#{logger_label} No device tokens were found for #{instance}, skipping."
     end
 
     def missing_device_tokens_logger
-      available?
+      return unless available?
       ionic_logger "#{logger_label} This model does not respond to :device_tokens, did you run your migrations?"
     end
 
@@ -25,8 +25,11 @@ module IonicNotification
     end
 
     def available?
-      unless available_log_levels.include? IonicNotification.log_level
-        return logger.fatal "#{logger_label} The specified log level is not available!"
+      if available_log_levels.include? IonicNotification.log_level
+        true
+      else
+        logger.fatal "#{logger_label} The specified log level is not available!"
+        false
       end
     end
   end
