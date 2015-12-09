@@ -1,10 +1,18 @@
 # IonicNotification
 
+- [Getting started](#getting-started)
+- [Model setup](#model-setup)
+- [Sending a Push Notification](#sending-a-push-notification)
+- [Check notification status](#check-notification-status)
+- [Notification parameters](#notification-parameters)
+- [Manually send a notification](#manually-send-out-a-notification)
+- [Configuration](#configuration)
+
 IonicNotification is an interface for Rails to use [Ionic.io](http://ionic.io/)'s [Push Notification](http://docs.ionic.io/docs/push-overview) service.
 
 _Keep in mind that Ionic.io's Push Notification is still in alpha at the moment, so this gem will probably undergo some major updates in the near future._
 
-## Getting Started
+## Getting started
 
 ```
 gem install ionic_notification
@@ -41,7 +49,7 @@ Configure the ionic_notification.rb file within config/initializers. You can use
   end
 ```
 
-## How to use
+## Model setup
 You can use IonicNotification directly from models.
 Run the proper generator:
 ```
@@ -110,6 +118,26 @@ notification = IonicNotification.latest_notifications.first
 notification.status
 ```
 
+## Notification parameters
+- `:tokens`: The device tokens, the targets for your notifications. It accepts an Array or a String.
+- `message`: The awesome message you want to display through your notification.
+- `schedule`: Pass a DateTime to schedule your notification. You can use `:notify_at` and `:notify_in` methods to do this.
+- `payload`: You can pass a Hash here to define a common payload for both iOS and Android.
+- `ios_payload`: You can pass a Hash to specify a payload for iOS devices.
+- `android_payload`: You can pass a Hash to specify a payload for Android devices.
+- `production`: You can override `IonicNotification.ionic_app_in_production` for each of your notifications. Take a look at the [configuration](#configuration) section for further details.
+- `:title`: See the `ionic_app_name` in the [configuration](#configuration) section for further details.
+
+## Manually send a notification
+In some cases, you may want to manually instantiate and send notifications. You can:
+```Ruby
+notification = IonicNotification::Notification.new(
+  tokens: ["array", "of", "tokens"],
+  message: "Your message"
+) # You can pass any of the parameters of course.
+notification.send
+```
+
 ## Configuration
 Here you'll find all required and optional options
 #### `ionic_application_id`
@@ -148,16 +176,6 @@ If you're allowing IonicNotification to process empty messages (see above), you'
 
 #### `ionic_api_url`
 Refer to [Ionic documentation](http://docs.ionic.io/docs/push-sending-push) for further information. It defaults to the standard Ionic endpoints.
-
-## Notification parameters
-- `:tokens`: The device tokens, the targets for your notifications. It accepts an Array or a String.
-- `message`: The awesome message you want to display through your notification.
-- `schedule`: Pass a DateTime to schedule your notification. You can use `:notify_at` and `:notify_in` methods to do this.
-- `payload`: You can pass a Hash here to define a common payload for both iOS and Android.
-- `ios_payload`: You can pass a Hash to specify a payload for iOS devices.
-- `android_payload`: You can pass a Hash to specify a payload for Android devices.
-- `production`: You can override `IonicNotification.ionic_app_in_production` for each of your notifications. Take a look at the [configuration](#configuration) section for further details.
-- `:title`: See the `ionic_app_name` in the [configuration](#configuration) section for further details.
 
 ## License
 
