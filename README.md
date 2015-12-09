@@ -5,7 +5,7 @@
 - [Sending a Push Notification](#sending-a-push-notification)
 - [Check notification status](#check-notification-status)
 - [Notification parameters](#notification-parameters)
-- [Manually send a notification](#manually-send-out-a-notification)
+- [Manually send a notification](#manually-send-a-notification)
 - [Configuration](#configuration)
 
 IonicNotification is an interface for Rails to use [Ionic.io](http://ionic.io/)'s [Push Notification](http://docs.ionic.io/docs/push-overview) service.
