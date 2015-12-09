@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rentziass/ionic_notification.svg?branch=master)](https://travis-ci.org/rentziass/ionic_notification)
+[![Gem Version](https://badge.fury.io/rb/ionic_notification.svg)](https://badge.fury.io/rb/ionic_notification)
 # IonicNotification
 
 - [Getting started](#getting-started)
