@@ -5,29 +5,28 @@ module IonicNotification
 
     attr_accessor :body
 
-    def initialize(message_id)
-      @message_id = message_id
+    def initialize(message_uuid)
+      @message_uuid = message_uuid
     end
 
     def check_status!
-      self.class.get("/api/v1/status/#{@message_id}", payload)
+      self.class.get("/push/notifications/#{@message_uuid}", payload)
+    end
+
+    def check_messages_status!
+      self.class.get("/push/notifications/#{@message_uuid}/messages", payload)
     end
 
     def payload
       options = {}
       options.
-        merge!(basic_auth: auth).
         merge!(headers: headers)
     end
 
     private
 
-    def auth
-      { username: IonicNotification.ionic_api_key }
-    end
-
     def headers
-      { 'Content-Type' => 'application/json', 'X-Ionic-Application-Id' => IonicNotification.ionic_application_id }
+      { 'Content-Type' => 'application/json', 'Authorization' => IonicNotification.ionic_application_api_token }
     end
   end
 end

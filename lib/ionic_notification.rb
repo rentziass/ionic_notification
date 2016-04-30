@@ -10,6 +10,10 @@ module IonicNotification
   mattr_accessor :ionic_api_key
   @@ionic_api_key = ""
 
+  # Private api token for sending information
+  mattr_accessor :ionic_application_api_token
+  @@ionic_application_api_token = ""
+
   # Application name
   mattr_accessor :ionic_app_name
   @@ionic_app_name = Rails.application.class.parent_name
@@ -26,6 +30,10 @@ module IonicNotification
   mattr_accessor :default_message
   @@default_message = "This was intended to be a beautiful notification. Unfortunately, you're not qualified to read it."
 
+  # Default profile tag for notifications
+  mattr_accessor :default_profile_tag
+  @@default_profile_tag = "default_profile_tag"
+
   # Logging level
   mattr_accessor :log_level
   @@log_level = :debug
@@ -40,7 +48,7 @@ module IonicNotification
 
   # API URL
   mattr_accessor :ionic_api_url
-  @@ionic_api_url = "https://push.ionic.io"
+  @@ionic_api_url = "https://api.ionic.io"
 
   def self.setup
     yield self

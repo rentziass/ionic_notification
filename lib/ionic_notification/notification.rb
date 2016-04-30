@@ -1,7 +1,7 @@
 module IonicNotification
   class Notification
     attr_accessor :tokens, :title, :message, :android_payload,
-      :ios_payload, :production, :scheduled
+      :ios_payload, :production, :scheduled, :profile
 
     def initialize(options = {})
       @message_provided = options[:message]
@@ -9,6 +9,7 @@ module IonicNotification
       @tokens = init_tokens(options[:tokens])
       @title ||= options[:title] || default_title
       @message ||= options[:message] || default_message
+      @profile ||= options[:profile] || default_profile_tag
 
       if options[:android_payload]
         @android_payload ||= assign_payload(options[:android_payload])
@@ -63,6 +64,10 @@ module IonicNotification
 
     def default_message
       IonicNotification.default_message
+    end
+
+    def default_profile_tag
+      IonicNotification.default_profile_tag
     end
 
     def default_payload

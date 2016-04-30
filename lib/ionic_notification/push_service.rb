@@ -10,14 +10,13 @@ module IonicNotification
     end
 
     def notify!
-      resp = self.class.post("/api/v1/push", payload)
+      resp = self.class.post("/push/notifications", payload)
       IonicNotification.store(sent_notification(resp))
     end
 
     def payload
       options = {}
       options.merge!(body: body).
-        merge!(basic_auth: auth).
         merge!(headers: headers)
     end
 
@@ -29,34 +28,37 @@ module IonicNotification
         production: @notification.production,
         title: @notification.title,
         message: @notification.message,
+        profile: @notification.profile,
         android_payload: @notification.android_payload,
         ios_payload: @notification.ios_payload,
         scheduled: @notification.scheduled,
         result: resp["result"],
-        message_id: resp["message_id"]
+        message_uuid: resp["message_uuid"]
       )
     end
 
     def body
-      {
+      body = {
         tokens: @notification.tokens,
-        scheduled: @notification.scheduled,
-        production: @notification.production,
+        profile: @notification.profile,
         notification: {
           title: @notification.title,
-          alert: @notification.message,
+          message: @notification.message,
           android: @notification.android_payload,
           ios: @notification.ios_payload
         }
-      }.to_json
+      }
+
+      body.merge!(scheduled: @notification.scheduled) if @notification.scheduled
+      body.to_json
     end
 
     def auth
-      { username: IonicNotification.ionic_api_key }
+      IonicNotification.ionic_application_api_token
     end
 
     def headers
-      { 'Content-Type' => 'application/json', 'X-Ionic-Application-Id' => IonicNotification.ionic_application_id }
+      { 'Content-Type' => 'application/json', 'Authorization' => IonicNotification.ionic_application_api_token }
     end
   end
 end
