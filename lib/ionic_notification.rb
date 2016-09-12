@@ -31,8 +31,11 @@ module IonicNotification
   @@default_message = "This was intended to be a beautiful notification. Unfortunately, you're not qualified to read it."
 
   # Default profile tag for notifications
-  mattr_accessor :default_profile_tag
-  @@default_profile_tag = "default_profile_tag"
+  mattr_accessor :production_profile_tag
+  mattr_accessor :development_profile_tag
+
+  @@development_profile_tag = ""
+  @@production_profile_tag = ""
 
   # Logging level
   mattr_accessor :log_level
@@ -52,6 +55,18 @@ module IonicNotification
 
   def self.setup
     yield self
+  end
+
+  def self.api_token_auth
+    "Bearer " + ionic_application_api_token
+  end
+
+  def self.default_profile_tag
+    if ionic_app_in_production
+      production_profile_tag
+    else
+      development_profile_tag
+    end
   end
 
   def self.store(notification)

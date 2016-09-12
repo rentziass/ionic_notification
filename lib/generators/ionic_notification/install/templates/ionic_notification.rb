@@ -9,6 +9,7 @@ IonicNotification.setup do |config|
   # within the Settings of your application on
   # https://apps.ionic.io/apps
   config.ionic_api_key = ENV["IONIC_API_KEY"]
+  config.ionic_application_api_token = ENV["IONIC_APPLICATION_API_TOKEN"]
 
   # Your Ionic app name will be used for the notification
   # title if none is provided. If you leave this undefined
@@ -43,6 +44,10 @@ IonicNotification.setup do |config|
   # if set to false, to all devices which have your app running
   # with developer certificates.
   config.ionic_app_in_production = true
+
+  # NEEDS DOCUMENTATION
+  config.production_profile_tag = ENV["IONIC_APP_PRODUCTION_PROFILE"]
+  config.development_profile_tag = ENV["IONIC_APP_DEVELOPMENT_PROFILE"]
   # If you want a more flexible solution, you can
   # uncomment this, so that notifications will be sent
   # to "production devices" only while Rails app is running

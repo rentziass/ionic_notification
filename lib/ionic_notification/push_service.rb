@@ -53,12 +53,8 @@ module IonicNotification
       body.to_json
     end
 
-    def auth
-      IonicNotification.ionic_application_api_token
-    end
-
     def headers
-      { 'Content-Type' => 'application/json', 'Authorization' => IonicNotification.ionic_application_api_token }
+      { 'Content-Type' => 'application/json', 'Authorization' => IonicNotification.api_token_auth }
     end
   end
 end
