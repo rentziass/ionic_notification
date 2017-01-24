@@ -45,9 +45,10 @@ IonicNotification.setup do |config|
   # with developer certificates.
   config.ionic_app_in_production = true
 
-  # NEEDS DOCUMENTATION
-  config.production_profile_tag = ENV["IONIC_APP_PRODUCTION_PROFILE"]
-  config.development_profile_tag = ENV["IONIC_APP_DEVELOPMENT_PROFILE"]
+  # The profile tag is mandatory in order to be able to send messages. It can be found under Settings -> Certificates.
+  # Create one environment for development and one later on for production.
+  config.production_profile_tag = ENV.fetch("IONIC_APP_PRODUCTION_PROFILE")
+  config.development_profile_tag = ENV.fetch("IONIC_APP_DEVELOPMENT_PROFILE")
   # If you want a more flexible solution, you can
   # uncomment this, so that notifications will be sent
   # to "production devices" only while Rails app is running
